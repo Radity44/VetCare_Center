@@ -10,7 +10,11 @@ use App\Http\Controllers\ServiceController;
 //     return view('Admin.DashboardAdmin');
 // });
 
-Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
+Route::get('/login', function () {
+    return view('login');
+});
+
+// Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
 Route::resource('dokter', DoctorController::class);
 Route::resource('pasien', PatientController::class);
 Route::resource('layanan', ServiceController::class);
