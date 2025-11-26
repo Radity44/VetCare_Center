@@ -13,7 +13,6 @@ class Visit extends Model
         'id_pasien',
         'id_dokter',
         'id_layanan',
-        'id_user',
         'tanggal_kunjungan',
         'keluhan',
         'diagnosis',
@@ -22,32 +21,31 @@ class Visit extends Model
         'total_biaya',
     ];
 
+        // ✅ TAMBAHKAN INI - Cast tanggal_kunjungan ke datetime
     protected $casts = [
         'tanggal_kunjungan' => 'datetime',
         'total_biaya' => 'decimal:2',
     ];
 
-    // Relasi ke Patient
+    // ❌ HAPUS relasi ke User
+    // public function user()
+    // {
+    //     return $this->belongsTo(User::class, 'id_user');
+    // }
+
+    // ✅ Relasi lain tetap ada
     public function patient()
     {
         return $this->belongsTo(Patient::class, 'id_pasien');
     }
 
-    // Relasi ke Doctor
     public function doctor()
     {
         return $this->belongsTo(Doctor::class, 'id_dokter');
     }
 
-    // Relasi ke Service
     public function service()
     {
         return $this->belongsTo(Service::class, 'id_layanan');
-    }
-
-    // Relasi ke User
-    public function user()
-    {
-        return $this->belongsTo(User::class, 'id_user');
     }
 }

@@ -10,7 +10,6 @@ class Patient extends Model
     use HasFactory;
 
     protected $fillable = [
-        'user_id',
         'nama_hewan',
         'jenis_hewan',
         'ras',
@@ -19,13 +18,8 @@ class Patient extends Model
         'riwayat_perawatan',
         'status',
     ];
-     // Relasi ke User (pemilik hewan)
-    public function user()
-    {
-        return $this->belongsTo(User::class);
-    }
 
-    // Relasi ke Visits
+    // Relasi ke visits
     public function visits()
     {
         return $this->hasMany(Visit::class, 'id_pasien');
