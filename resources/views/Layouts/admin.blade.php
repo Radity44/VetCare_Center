@@ -40,7 +40,7 @@
         <!-- Sidebar Kiri -->
         <aside class="w-64 bg-gradient-to-b from-blue-600 to-purple-700 text-white flex-shrink-0">
             <div class="p-6">
-                <h1 class="text-2xl font-bold">🐾 VetCare</h1>
+                <h1 class="text-2xl font-bold">VetCare</h1>
                 <p class="text-blue-100 text-sm">Sistem Klinik Hewan</p>
             </div>
 

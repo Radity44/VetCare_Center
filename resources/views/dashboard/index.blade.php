@@ -69,7 +69,7 @@
 
 <!-- Status Perawatan -->
 <div class="bg-white rounded-lg shadow-md p-6 mb-6">
-    <h3 class="text-lg font-semibold text-gray-800 mb-4">📊 Status Perawatan Pasien</h3>
+    <h3 class="text-lg font-semibold text-gray-800 mb-4">Status Perawatan Pasien</h3>
     <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-7 gap-4">
         @php
             $statuses = ['Booking', 'Pemeriksaan', 'Pra-Karantina', 'Operasi', 'Pasca-Karantina', 'Rawat Jalan', 'Selesai'];
@@ -89,7 +89,7 @@
     <!-- Pasien Terbaru -->
     <div class="bg-white rounded-lg shadow-md">
         <div class="px-6 py-4 border-b border-gray-200">
-            <h3 class="text-lg font-semibold text-gray-800">🐕 Pasien Terbaru</h3>
+            <h3 class="text-lg font-semibold text-gray-800"> Pasien Terbaru</h3>
         </div>
         <div class="p-6">
             <div class="space-y-4">
@@ -118,7 +118,7 @@
     <!-- Kunjungan Terbaru -->
     <div class="bg-white rounded-lg shadow-md">
         <div class="px-6 py-4 border-b border-gray-200">
-            <h3 class="text-lg font-semibold text-gray-800">📋 Kunjungan Terbaru</h3>
+            <h3 class="text-lg font-semibold text-gray-800"> Kunjungan Terbaru</h3>
         </div>
         <div class="p-6">
             <div class="space-y-4">
