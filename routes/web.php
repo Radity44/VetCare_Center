@@ -10,5 +10,6 @@ Route::get('/login', function () {
     return view('login');
 });
 
+Route::get('/DashboardAdmin', function () {
     return view('Admin.DashboardAdmin');
-;
+});
