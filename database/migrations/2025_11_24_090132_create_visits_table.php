@@ -19,6 +19,7 @@ return new class extends Migration
             $table->text('tindakan')->nullable();
             $table->text('catatan')->nullable();
             $table->decimal('total_biaya', 10, 2)->nullable();
+            $table->enum('status_visit', ['Scheduled', 'In Progress', 'Completed', 'Cancelled'])->default('Scheduled');
             $table->timestamps();
         });
     }

@@ -9,7 +9,7 @@ class Doctor extends Model
 {
     use HasFactory;
 
-    protected $fillable =[
+    protected $fillable = [
         'nama',
         'spesialis',
         'telepon',
@@ -17,11 +17,8 @@ class Doctor extends Model
         'alamat',
         'is_active',
     ];
-    protected $casts = [
-        'is_active' => 'boolean',
-    ];
 
-    // Relasi ke Visits
+    // Relasi ke kunjungan
     public function visits()
     {
         return $this->hasMany(Visit::class, 'id_dokter');

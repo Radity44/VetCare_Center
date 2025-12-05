@@ -74,39 +74,42 @@
         </div>
     </div>
 
-    <!-- Status Perawatan -->
     <div class="bg-white rounded-lg shadow-md p-6 mb-6">
         <h3 class="text-lg font-semibold text-gray-800 mb-4">Status Perawatan Pasien</h3>
-        <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-7 gap-4">
+        <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-9 gap-4">
             @php
-                $statuses = [
-                    'Booking',
-                    'Pemeriksaan',
-                    'Pra-Karantina',
-                    'Operasi',
-                    'Pasca-Karantina',
-                    'Rawat Jalan',
-                    'Selesai',
+            $statuses = [
+                'Booking',
+                'Pemeriksaan',
+                'Pra-Karantina',
+                'Operasi',
+                'Pasca-Karantina',
+                'Rawat Jalan',
+                'Kritis',      // ← TAMBAHKAN
+                'Meninggal',   // ← TAMBAHKAN
+                'Selesai',
                 ];
-                $colors = [
-                    'bg-yellow-100 text-yellow-800',
-                    'bg-blue-100 text-blue-800',
-                    'bg-orange-100 text-orange-800',
-                    'bg-red-100 text-red-800',
-                    'bg-purple-100 text-purple-800',
-                    'bg-indigo-100 text-indigo-800',
-                    'bg-green-100 text-green-800',
-                ];
+            $colors = [
+                'bg-yellow-100 text-yellow-800',
+                'bg-blue-100 text-blue-800',
+                'bg-orange-100 text-orange-800',
+                'bg-red-100 text-red-800',
+                'bg-purple-100 text-purple-800',
+                'bg-indigo-100 text-indigo-800',
+                'bg-red-200 text-red-900 border-2 border-red-400',     // ← KRITIS
+                'bg-gray-800 text-white border-2 border-gray-900',     // ← MENINGGAL
+                'bg-green-100 text-green-800',
+            ];
             @endphp
 
             @foreach ($statuses as $index => $status)
-                <div class="text-center p-4 {{ $colors[$index] }} rounded-lg">
-                    <p class="text-2xl font-bold">{{ $statusStats[$status] ?? 0 }}</p>
-                    <p class="text-xs mt-1">{{ $status }}</p>
-                </div>
-            @endforeach
-        </div>
+            <div class="text-center p-4 {{ $colors[$index] }} rounded-lg">
+                <p class="text-2xl font-bold">{{ $statusStats[$status] ?? 0 }}</p>
+                <p class="text-xs mt-1">{{ $status }}</p>
+            </div>
+        @endforeach
     </div>
+
 
     <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
         <!-- Pasien Terbaru -->
