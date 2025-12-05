@@ -24,8 +24,15 @@ class Service extends Model
     ];
 
     // Relasi ke Visits
+    // public function visits()
+    // {
+    //     return $this->hasMany(Visit::class, 'id_layanan');
+    // }
     public function visits()
     {
         return $this->hasMany(Visit::class, 'id_layanan');
     }
+    
+
+
 }

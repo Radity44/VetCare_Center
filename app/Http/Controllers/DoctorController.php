@@ -32,10 +32,32 @@ class DoctorController extends Controller
         return redirect()->route('dokter.index')->with('success', 'Data dokter berhasil ditambahkan!');
     }
 
-    public function show(Doctor $dokter)
-    {
-        return view('dokter.show', compact('dokter'));
+    public function show(Request $request, Doctor $dokter)
+{
+    // Ambil parameter filter dari request
+    $tanggalMulai = $request->input('tanggal_mulai');
+    $tanggalSelesai = $request->input('tanggal_selesai');
+    
+    // Query visits dengan filter tanggal jika ada
+    $visitsQuery = $dokter->visits()
+        ->with(['patient', 'service'])
+        ->orderBy('tanggal_kunjungan', 'desc');
+    
+    // Terapkan filter jika ada input tanggal
+    if ($tanggalMulai) {
+        $visitsQuery->whereDate('tanggal_kunjungan', '>=', $tanggalMulai);
     }
+    
+    if ($tanggalSelesai) {
+        $visitsQuery->whereDate('tanggal_kunjungan', '<=', $tanggalSelesai);
+    }
+    
+    // Paginate hasil (10 per halaman)
+    $visits = $visitsQuery->paginate(10);
+    
+    return view('dokter.show', compact('dokter', 'visits', 'tanggalMulai', 'tanggalSelesai'));
+}
+
 
     public function edit(Doctor $dokter)
     {
