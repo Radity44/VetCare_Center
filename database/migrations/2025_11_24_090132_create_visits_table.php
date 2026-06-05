@@ -10,7 +10,7 @@ return new class extends Migration
     {
         Schema::create('visits', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('id_pasien')->constrained('patients')->onDelete('cascade');
+            $table->foreignId('patient_id')->constrained('patients')->onDelete('cascade');
             $table->foreignId('id_dokter')->constrained('doctors')->onDelete('cascade');
             $table->foreignId('id_layanan')->constrained('services')->onDelete('cascade');
             $table->dateTime('tanggal_kunjungan');
@@ -18,8 +18,8 @@ return new class extends Migration
             $table->text('diagnosis')->nullable();
             $table->text('tindakan')->nullable();
             $table->text('catatan')->nullable();
-            $table->decimal('total_biaya', 10, 2)->nullable();
-            $table->enum('status_visit', ['Scheduled', 'In Progress', 'Completed', 'Cancelled'])->default('Scheduled');
+            $table->decimal('total_biaya', 12, 2)->default(0);
+            $table->string('status_visit')->default('Menunggu');
             $table->timestamps();
         });
     }

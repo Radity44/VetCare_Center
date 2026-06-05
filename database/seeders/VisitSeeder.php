@@ -12,7 +12,7 @@ class VisitSeeder extends Seeder
     {
         $visits = [
             [
-                'id_pasien' => 1,
+                'patient_id' => 1,
                 'id_dokter' => 1,
                 'id_layanan' => 1,
                 'tanggal_kunjungan' => Carbon::now()->subDays(2),
@@ -23,7 +23,7 @@ class VisitSeeder extends Seeder
                 'total_biaya' => 250000,
             ],
             [
-                'id_pasien' => 2,
+                'patient_id' => 2,
                 'id_dokter' => 2,
                 'id_layanan' => 2,
                 'tanggal_kunjungan' => Carbon::now()->subDays(5),
@@ -34,7 +34,7 @@ class VisitSeeder extends Seeder
                 'total_biaya' => 180000,
             ],
             [
-                'id_pasien' => 3,
+                'patient_id' => 3,
                 'id_dokter' => 1,
                 'id_layanan' => 3,
                 'tanggal_kunjungan' => Carbon::now()->subDays(10),
@@ -45,7 +45,7 @@ class VisitSeeder extends Seeder
                 'total_biaya' => 1500000,
             ],
             [
-                'id_pasien' => 4,
+                'patient_id' => 4,
                 'id_dokter' => 3,
                 'id_layanan' => 4,
                 'tanggal_kunjungan' => Carbon::now()->subDay(),
@@ -56,7 +56,7 @@ class VisitSeeder extends Seeder
                 'total_biaya' => 450000,
             ],
             [
-                'id_pasien' => 5,
+                'patient_id' => 5,
                 'id_dokter' => 2,
                 'id_layanan' => 5,
                 'tanggal_kunjungan' => Carbon::now(),
@@ -67,7 +67,7 @@ class VisitSeeder extends Seeder
                 'total_biaya' => 200000,
             ],
             [
-                'id_pasien' => 6,
+                'patient_id' => 6,
                 'id_dokter' => 4,
                 'id_layanan' => 7,
                 'tanggal_kunjungan' => Carbon::now()->subDays(3),
@@ -78,7 +78,7 @@ class VisitSeeder extends Seeder
                 'total_biaya' => 350000,
             ],
         ];
-        
+
 
         foreach ($visits as $visit) {
             Visit::create($visit);

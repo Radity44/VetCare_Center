@@ -29,12 +29,12 @@
             {{-- ✅ Dropdown Pasien dengan Select2 (FIXED) --}}
             <div>
                 <label class="block text-sm font-medium text-gray-700 mb-1">Pilih Pasien</label>
-                <select name="id_pasien" id="id_pasien" required
+                <select name="patient_id" id="patient_id" required
                     class="w-full rounded-lg border-2 border-gray-300 py-2.5 px-3 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white">
                     <option value="">-- Pilih Pasien --</option>
                     @foreach ($patients as $p)
                         <option value="{{ $p->id }}"
-                            {{ request('patient_id') == $p->id || old('id_pasien') == $p->id ? 'selected' : '' }}>
+                            {{ request('patient_id') == $p->id || old('patient_id') == $p->id ? 'selected' : '' }}>
                             🐾 {{ $p->nama_hewan }} ({{ $p->jenis_hewan }})
                             @if ($p->nama_pemilik)
                                 | 👤 {{ $p->nama_pemilik }}
@@ -46,7 +46,7 @@
                 <p class="text-xs text-gray-500 mt-1">
                     Ketik nama hewan, jenis, atau pemilik untuk mencari dengan cepat
                 </p>
-                @error('id_pasien')
+                @error('patient_id')
                     <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
                 @enderror
             </div>

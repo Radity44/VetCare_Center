@@ -45,47 +45,47 @@ class Patient extends Model
     if (!$this->tanggal_lahir) {
         return $this->umur_hewan . ' tahun';
     }
-    
+
     try {
         $lahir = Carbon::parse($this->tanggal_lahir);
         $sekarang = Carbon::now();
-        
+
         // VALIDASI: Jika tanggal lahir di masa depan, return error
         if ($lahir->isFuture()) {
             return 'Tanggal lahir tidak valid';
         }
-        
+
         // Hitung total bulan (absolute value untuk hindari minus, floor untuk bulatkan)
         $totalBulan = floor(abs($lahir->diffInMonths($sekarang)));
-        
+
         // Jika kurang dari 12 bulan (< 1 tahun), tampilkan dalam bulan
         if ($totalBulan < 12) {
             if ($totalBulan == 0) {
                 // Hitung dalam hari jika baru lahir (< 1 bulan)
                 $hari = floor(abs($lahir->diffInDays($sekarang)));
-                
+
                 if ($hari == 0) {
                     return 'Baru lahir';
                 }
-                
+
                 return $hari . ' hari';
             }
             return $totalBulan . ' bulan';
         }
-        
+
         // Jika >= 1 tahun, hitung tahun dan sisa bulan
         $tahun = floor(abs($lahir->diffInYears($sekarang)));
-        
+
         // Hitung sisa bulan dengan cara yang lebih aman
         $lahirPlusTahun = $lahir->copy()->addYears($tahun);
         $bulan = floor(abs($lahirPlusTahun->diffInMonths($sekarang)));
-        
+
         if ($bulan == 0) {
             return $tahun . ' tahun';
         } else {
             return $tahun . ' tahun ' . $bulan . ' bulan';
         }
-        
+
     } catch (\Exception $e) {
         return 'Format tanggal salah';
     }
@@ -94,7 +94,7 @@ class Patient extends Model
 
     public function visits()
     {
-        return $this->hasMany(Visit::class, 'id_pasien', 'id');
+        return $this->hasMany(Visit::class, 'patient_id', 'id');
     }
 
     public static function getStatusList()

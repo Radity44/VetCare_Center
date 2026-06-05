@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Visit extends Model
 {
     protected $fillable = [
-        'id_pasien',
+        'patient_id',
         'id_dokter',
         'id_layanan',
         'tanggal_kunjungan',
@@ -29,7 +29,7 @@ class Visit extends Model
      */
     public function patient()
     {
-        return $this->belongsTo(Patient::class, 'id_pasien', 'id');
+        return $this->belongsTo(Patient::class, 'patient_id', 'id');
     }
 
     /**
