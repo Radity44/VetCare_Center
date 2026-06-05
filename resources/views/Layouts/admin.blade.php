@@ -111,15 +111,15 @@
                 <div class="border-t border-white border-opacity-20 my-4"></div>
 
                 <!-- Logout -->
-                <a href="#"
-                    class="flex items-center px-6 py-3 hover:bg-white hover:bg-opacity-10 transition rounded-lg text-red-200">
+                <button type="button" onclick="showLogoutModal()"
+                    class="w-full flex items-center px-6 py-3 hover:bg-white hover:bg-opacity-10 transition rounded-lg text-red-200">
                     <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                             d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1">
                         </path>
                     </svg>
                     Logout
-                </a>
+                </button>
             </nav>
 
             <!-- User Profile (Bottom) -->
@@ -142,9 +142,9 @@
             <header class="bg-white shadow-sm z-10">
                 <div class="px-6 py-4 flex items-center justify-between">
                     <h2 class="text-xl font-semibold text-gray-800">@yield('header', 'Dashboard')</h2>
-                    <div class="flex items-center space-x-4">
+                    {{-- <div class="flex items-center space-x-4">
                         <span class="text-sm text-gray-600">{{ now()->format('d M Y, H:i') }} WIB</span>
-                    </div>
+                    </div> --}}
                 </div>
             </header>
 
@@ -159,6 +159,36 @@
             </footer>
         </div>
     </div>
+
+    <!-- Logout Modal -->
+    <div id="logoutModal" class="fixed inset-0 z-50 hidden flex items-center justify-center bg-black bg-opacity-50 transition-opacity">
+        <div class="bg-white rounded-lg shadow-xl w-96 transform transition-all p-6">
+            <div class="flex items-center justify-center w-12 h-12 mx-auto bg-red-100 rounded-full mb-4">
+                <svg class="w-6 h-6 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path>
+                </svg>
+            </div>
+            <h3 class="text-lg font-medium text-gray-900 text-center mb-2">Konfirmasi Logout</h3>
+            <p class="text-sm text-gray-500 text-center mb-6">Apakah Anda yakin ingin keluar dari aplikasi?</p>
+            <div class="flex justify-center space-x-3">
+                <button onclick="hideLogoutModal()" class="px-4 py-2 bg-gray-200 text-gray-800 rounded hover:bg-gray-300 transition w-full">Tidak</button>
+                <form action="{{ route('logout') }}" method="POST" class="w-full m-0">
+                    @csrf
+                    <button type="submit" class="px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700 transition w-full">Ya, Logout</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function showLogoutModal() {
+            document.getElementById('logoutModal').classList.remove('hidden');
+        }
+        function hideLogoutModal() {
+            document.getElementById('logoutModal').classList.add('hidden');
+        }
+    </script>
+    
     @stack('scripts')
 </body>
 

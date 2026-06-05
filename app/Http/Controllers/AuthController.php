@@ -18,17 +18,19 @@ class AuthController extends Controller
     $credentials = $request->validate([
         'email' => 'required|email',
         'password' => 'required|min:6',
+    ], [
+        'email.required' => 'Email wajib diisi.',
+        'email.email' => 'Format email tidak valid.',
+        'password.required' => 'Password wajib diisi.',
+        'password.min' => 'Password minimal harus 6 karakter.',
     ]);
 
-    // Cek user dan role
+    // Cek user
     $user = User::where('email', $credentials['email'])->first();
     if (!$user) {
         return back()->withErrors(['email' => 'Email tidak ditemukan.']);
     }
 
-    // if ($user->role !== 'admin') {
-    //     return back()->withErrors(['email' => 'Anda bukan admin.']);
-    // }
 
     // Login pakai Auth
     if (Auth::attempt($credentials)) {
@@ -39,4 +41,13 @@ class AuthController extends Controller
     return back()->withErrors(['password' => 'Password salah.']);
 }
 
+    public function logout(Request $request)
+    {
+        Auth::logout();
+
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+
+        return redirect()->route('login');
+    }
 }

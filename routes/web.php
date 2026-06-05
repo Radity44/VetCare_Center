@@ -81,22 +81,25 @@ Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
 Route::post('/login', [AuthController::class, 'login'])->name('login.process');
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
-// Dashboard
-Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+// ---------- SEMUA ROUTE BUTUH LOGIN ----------
+Route::middleware(['auth', 'prevent-back-history'])->group(function () {
+    // Dashboard
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
-// ✅ CUSTOM ROUTES (HARUS DI ATAS Route::resource)
-// Pasien custom routes
-Route::get('pasien/{pasien}/status', [PatientController::class, 'editStatus'])->name('pasien.editStatus');
-Route::post('pasien/{pasien}/status', [PatientController::class, 'updateStatus'])->name('pasien.updateStatus');
+    // ✅ CUSTOM ROUTES (HARUS DI ATAS Route::resource)
+    // Pasien custom routes
+    Route::get('pasien/{pasien}/status', [PatientController::class, 'editStatus'])->name('pasien.editStatus');
+    Route::post('pasien/{pasien}/status', [PatientController::class, 'updateStatus'])->name('pasien.updateStatus');
 
-// ✅ Kunjungan custom routes (STRUK)
-Route::get('kunjungan/{kunjungan}/struk', [VisitController::class, 'previewStruk'])
-    ->name('kunjungan.struk');
-Route::get('kunjungan/{kunjungan}/struk/download', [VisitController::class, 'downloadStruk'])
-    ->name('kunjungan.struk.download');
+    // ✅ Kunjungan custom routes (STRUK)
+    Route::get('kunjungan/{kunjungan}/struk', [VisitController::class, 'previewStruk'])
+        ->name('kunjungan.struk');
+    Route::get('kunjungan/{kunjungan}/struk/download', [VisitController::class, 'downloadStruk'])
+        ->name('kunjungan.struk.download');
 
-// ✅ RESOURCE ROUTES (DI BAWAH)
-Route::resource('pasien', PatientController::class);
-Route::resource('dokter', DoctorController::class);
-Route::resource('layanan', ServiceController::class);
-Route::resource('kunjungan', VisitController::class);
+    // ✅ RESOURCE ROUTES (DI BAWAH)
+    Route::resource('pasien', PatientController::class);
+    Route::resource('dokter', DoctorController::class);
+    Route::resource('layanan', ServiceController::class);
+    Route::resource('kunjungan', VisitController::class);
+});

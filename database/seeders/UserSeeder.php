@@ -14,6 +14,7 @@ class UserSeeder extends Seeder
             'nama' => 'Admin VetCare',
             'email' => 'admin@vetcare.com',
             'password' => Hash::make('admin123'),
+            'role' => 'admin',
         ]);
     }
 }

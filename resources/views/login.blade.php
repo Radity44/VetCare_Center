@@ -15,16 +15,22 @@
 
                 <div class="mb-4">
                     <label for="login-email" class="block text-sm font-medium text-gray-700 mb-1">Email</label>
-                    <input type="email" id="login-email" name="email" placeholder="email@example.com"
-                        class="w-full rounded-xl border border-gray-300 px-4 py-2 text-base outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                    <input type="email" id="login-email" name="email" placeholder="email@example.com" value="{{ old('email') }}"
+                        class="w-full rounded-xl border @error('email') border-red-500 @else border-gray-300 @enderror px-4 py-2 text-base outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
                         required />
+                    @error('email')
+                        <p class="text-red-500 text-xs mt-1 font-medium">{{ $message }}</p>
+                    @enderror
                 </div>
 
                 <div class="mb-6">
                     <label for="login-password" class="block text-sm font-medium text-gray-700 mb-1">Password</label>
                     <input type="password" id="login-password" name="password"
-                        class="w-full rounded-xl border border-gray-300 px-4 py-2 text-base outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                        class="w-full rounded-xl border @error('password') border-red-500 @else border-gray-300 @enderror px-4 py-2 text-base outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
                         required />
+                    @error('password')
+                        <p class="text-red-500 text-xs mt-1 font-medium">{{ $message }}</p>
+                    @enderror
                 </div>
 
                 <button type="submit"
@@ -34,9 +40,7 @@
             </form>
 
             <p class="text-gray-500 text-center text-sm mt-6">
-                Belum punya akun?
-                <button type="button" class="text-blue-600 font-semibold hover:underline ml-1" onclick="/">Daftar
-                    dulu</button>
+                Klik masuk untuk login!
             </p>
         </div>
     </div>

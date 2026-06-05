@@ -13,7 +13,7 @@ class PatientController extends Controller
     public function index(Request $request)
     {
         $query = Patient::query();
-        
+
         // 🔍 Search
         if ($request->filled('search')) {
             $search = $request->search;
@@ -24,20 +24,20 @@ class PatientController extends Controller
                   ->orWhere('ras', 'like', "%{$search}%");
             });
         }
-        
+
         // 🎯 Filter: Status
         if ($request->filled('status')) {
             $query->where('status', $request->status);
         }
-        
+
         // 🎯 Filter: Jenis Hewan
         if ($request->filled('jenis_hewan')) {
             $query->where('jenis_hewan', 'like', "%{$request->jenis_hewan}%");
         }
-        
+
         $patients = $query->orderByDesc('created_at')->paginate(10);
         $statusList = Patient::getStatusList();
-        
+
         return view('pasien.index', compact('patients', 'statusList'));
     }
 
@@ -76,11 +76,11 @@ class PatientController extends Controller
             'visits' => function($query) {
                 $query->orderBy('tanggal_kunjungan', 'desc')
                       ->orderBy('created_at', 'desc');
-            }, 
-            'visits.doctor', 
+            },
+            'visits.doctor',
             'visits.service'
         ]);
-        
+
         return view('pasien.show', compact('pasien'));
     }
 
@@ -90,11 +90,11 @@ class PatientController extends Controller
             'visits' => function($query) {
                 $query->orderBy('tanggal_kunjungan', 'desc')
                       ->orderBy('created_at', 'desc');
-            }, 
-            'visits.doctor', 
+            },
+            'visits.doctor',
             'visits.service'
         ]);
-        
+
         return view('pasien.edit', compact('pasien'));
     }
 
@@ -114,13 +114,13 @@ class PatientController extends Controller
             'status'            => 'required|in:' . implode(',', Patient::getStatusList()),
             'judul_perawatan'   => 'nullable|string|max:100',
         ]);
-        
+
         if ($request->tanggal_lahir) {
             $validated['umur_hewan'] = Carbon::parse($request->tanggal_lahir)->age;
         }
-        
+
         $pasien->update($validated);
-        
+
         return redirect()->route('pasien.index')
                          ->with('success', 'Data pasien berhasil diupdate!');
     }
@@ -143,7 +143,7 @@ class PatientController extends Controller
         ]);
 
         if ($request->catatan_status) {
-            $pasien->riwayat_perawatan = ($pasien->riwayat_perawatan ? $pasien->riwayat_perawatan . "\n\n" : '') 
+            $pasien->riwayat_perawatan = ($pasien->riwayat_perawatan ? $pasien->riwayat_perawatan . "\n\n" : '')
                 . "[" . now()->format('d M Y H:i') . "] Status: " . $request->status . " - " . $request->catatan_status;
             $pasien->save();
         }
@@ -155,7 +155,7 @@ class PatientController extends Controller
     public function destroy(Patient $pasien)
     {
         $pasien->delete();
-        
+
         return redirect()->route('pasien.index')
                          ->with('success', 'Data pasien berhasil dihapus!');
     }
@@ -165,24 +165,24 @@ class PatientController extends Controller
         if ($pasien->status !== 'Selesai') {
             return redirect()->back()->with('error', 'Struk hanya bisa dilihat untuk pasien dengan status "Selesai".');
         }
-        
+
         $kunjungan = $pasien->visits()->latest('tanggal_kunjungan')->first();
-        
+
         if (!$kunjungan) {
             return redirect()->back()->with('error', 'Pasien belum memiliki riwayat kunjungan.');
         }
-        
+
         $kunjungan->load('patient', 'doctor', 'service');
-        
+
         $invoiceNumber = 'INV-' . $pasien->id . '-P-' . date('Ymd');
-        
+
         $data = [
             'kunjungan' => $kunjungan,
             'pasien' => $pasien,
             'invoiceNumber' => $invoiceNumber,
             'tanggalCetak' => now()->format('d F Y, H:i') . ' WIB'
         ];
-        
+
         return view('pasien.struk-preview', $data);
     }
 
@@ -191,27 +191,27 @@ class PatientController extends Controller
         if ($pasien->status !== 'Selesai') {
             return redirect()->back()->with('error', 'Struk hanya bisa dicetak untuk pasien dengan status "Selesai".');
         }
-        
+
         $kunjungan = $pasien->visits()->latest('tanggal_kunjungan')->first();
-        
+
         if (!$kunjungan) {
             return redirect()->back()->with('error', 'Pasien belum memiliki riwayat kunjungan.');
         }
-        
+
         $kunjungan->load('patient', 'doctor', 'service');
-        
+
         $invoiceNumber = 'INV-' . $pasien->id . '-P-' . date('Ymd');
-        
+
         $data = [
             'kunjungan' => $kunjungan,
             'pasien' => $pasien,
             'invoiceNumber' => $invoiceNumber,
             'tanggalCetak' => now()->format('d F Y, H:i') . ' WIB'
         ];
-        
+
         $pdf = Pdf::loadView('pasien.struk-pdf', $data);
         $pdf->setPaper('A4', 'portrait');
-        
+
         return $pdf->download('Struk-Pasien-' . $pasien->nama_hewan . '-' . $invoiceNumber . '.pdf');
     }
 }
